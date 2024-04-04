@@ -3,19 +3,16 @@ public:
     int maxDepth(string s) {
         int length = 0;
         int maxLength = 0;
-        stack<char> st;
         for (char c : s) {
             if (c == '(') {
-                st.push(c);
-                maxLength = max(maxLength, (int)st.size());
+                length++;
+                maxLength = max(length, maxLength);
             } 
             else if (c == ')') {
-                if (!st.empty()) {
-                    st.pop();
-                } 
-                else {
-                    while (!st.empty()) st.pop();
-                }
+                length--;
+            }
+            else{
+                continue;
             }
         }
 

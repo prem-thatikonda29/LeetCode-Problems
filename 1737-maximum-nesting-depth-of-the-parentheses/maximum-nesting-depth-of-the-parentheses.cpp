@@ -12,9 +12,9 @@ public:
             else if (s[i] == ')') {
                 length--;
             }
-            else{
-                continue;
-            }
+            // else{
+            //     continue;
+            // }
         }
 
         return maxLength;

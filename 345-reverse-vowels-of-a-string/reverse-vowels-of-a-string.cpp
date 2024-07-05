@@ -13,7 +13,7 @@ public:
             }
             if(!isVowel(s[end])){
                 end--;
-                
+
             }
         }
 

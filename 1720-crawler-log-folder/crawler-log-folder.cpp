@@ -1,7 +1,6 @@
 class Solution {
 public:
     int minOperations(vector<string>& logs) {
-        int count = 1;
         int moves = 1;
         for(const auto& log : logs){
             if((log == "../" && moves == 1) || log == "./"){

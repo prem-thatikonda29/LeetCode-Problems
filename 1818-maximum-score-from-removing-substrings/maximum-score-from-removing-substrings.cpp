@@ -1,65 +1,43 @@
 class Solution {
 public:
     int maximumGain(string s, int x, int y) {
-    int score = 0;
-    
-    // Determine the order of removal based on the points
-    if (x > y) {
-        // Remove "ab" first
-        stack<char> stk;
-        string remaining;
-        for (char c : s) {
-            if (!stk.empty() && stk.top() == 'a' && c == 'b') {
-                score += x;
-                stk.pop();
+        // Ensure "ab" always has more points than "ba"
+        if (x < y) {
+            // Swap points
+            int temp = x;
+            x = y;
+            y = temp;
+            // Reverse the string to maintain logic
+            reverse(s.begin(), s.end());
+        }
+
+        int aCount = 0, bCount = 0, totalPoints = 0;
+
+        for (int i = 0; i < s.size(); ++i) {
+            char currentChar = s[i];
+
+            if (currentChar == 'a') {
+                ++aCount;
+            } else if (currentChar == 'b') {
+                if (aCount > 0) {
+                    // Can form "ab", remove it and add points
+                    --aCount;
+                    totalPoints += x;
+                } else {
+                    // Can't form "ab", keep 'b' for potential future "ba"
+                    ++bCount;
+                }
             } else {
-                stk.push(c);
+                // Non 'a' or 'b' character encountered
+                // Calculate points for any remaining 'ba' pairs
+                totalPoints += min(bCount, aCount) * y;
+                // Reset counters for next segment
+                aCount = bCount = 0;
             }
         }
-        while (!stk.empty()) {
-            remaining.push_back(stk.top());
-            stk.pop();
-        }
-        reverse(remaining.begin(), remaining.end());
-        
-        // Remove "ba" next
-        for (char c : remaining) {
-            if (!stk.empty() && stk.top() == 'b' && c == 'a') {
-                score += y;
-                stk.pop();
-            } else {
-                stk.push(c);
-            }
-        }
-    } else {
-        // Remove "ba" first
-        stack<char> stk;
-        string remaining;
-        for (char c : s) {
-            if (!stk.empty() && stk.top() == 'b' && c == 'a') {
-                score += y;
-                stk.pop();
-            } else {
-                stk.push(c);
-            }
-        }
-        while (!stk.empty()) {
-            remaining.push_back(stk.top());
-            stk.pop();
-        }
-        reverse(remaining.begin(), remaining.end());
-        
-        // Remove "ab" next
-        for (char c : remaining) {
-            if (!stk.empty() && stk.top() == 'a' && c == 'b') {
-                score += x;
-                stk.pop();
-            } else {
-                stk.push(c);
-            }
-        }
+        // Calculate points for any remaining "ba" pairs at the end
+        totalPoints += min(bCount, aCount) * y;
+
+        return totalPoints;
     }
-    
-    return score;
-}
 };

@@ -27,12 +27,8 @@ public:
                 nodes[child] = new TreeNode(child);
             }
 
-            if(isLeft){
-                nodes[parent]->left = nodes[child];
-            }
-            else{
-                nodes[parent]->right = nodes[child];
-            }
+            if(isLeft) nodes[parent]->left = nodes[child];
+            else nodes[parent]->right = nodes[child];
 
             children.insert(child);
         }

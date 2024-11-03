@@ -1,15 +1,22 @@
 class Solution {
 public:
-    bool rotateString(string s, string goal) {
-        string newStr = "";
-        if(s == goal) return true;
-        if(s.length() != goal.length()) return false;
-
-        for(int i = 0; i < s.length(); i++){
-            newStr = s.substr(i) + s.substr(0, i);
-            if(newStr == goal) return true;
+    bool isPossible(string s, string goal, int n, int shift) {
+        for (int i = 0; i < n; i++) {
+            if (s[(i + shift) % n] != goal[i]) {
+                return false;
+            }
         }
+        return true;
+    }
 
+    bool rotateString(string s, string goal) {
+        if (s.length() != goal.length()) return false;
+        int n = s.length();
+
+        for (int i = 0; i < n; i++) {
+            if (isPossible(s, goal, n, i)) return true;
+        }
+        
         return false;
     }
 };

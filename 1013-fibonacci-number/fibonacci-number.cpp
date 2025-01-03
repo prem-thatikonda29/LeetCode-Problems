@@ -1,17 +1,15 @@
 class Solution {
 public:
     int fib(int n) {
-        if(n == 2 || n == 1) return 1;
-        if(n == 0) return 0;
-        int fibo = 0;
-        int num1 = 0; 
-        int num2 = 1;
-        for(int i = 0; i < n - 1; i++){
-            fibo = num1 + num2;
-            num1 = num2;
-            num2 = fibo;
+        if(n <= 1) return n;
+        int prev1 = 0;
+        int prev2 = 1;
+        int fibo;
+        for(int i = 2; i <= n; i++){
+            fibo = prev1 + prev2;
+            prev1 = prev2;
+            prev2 = fibo;
         }
-        
         return fibo;
     }
 };

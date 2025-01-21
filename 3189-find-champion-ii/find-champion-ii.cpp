@@ -4,8 +4,7 @@ public:
         vector<int> inDegrees(n, 0);
 
         for(const auto& team : edges){
-            int weakerTeam = team[1];
-            inDegrees[weakerTeam]++;
+            inDegrees[team[1]]++;
         }
 
         int champion = -1;
@@ -14,7 +13,9 @@ public:
                 if(champion != -1){
                     return -1;
                 }
-                champion = i;
+                else{
+                    champion = i;
+                }
             }
         }
 

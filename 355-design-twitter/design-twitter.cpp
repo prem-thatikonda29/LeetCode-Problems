@@ -19,8 +19,9 @@ class Twitter {
             // priority queue to store the tweets in a descending order
             priority_queue<pair<int, int>> pq;
 
-            // add user's tweets to the priority queue
+            // if user has tweets, add them to the priority queue
             if(tweets.count(userId)){
+                // adding every tweet in that user's 'tweets' list
                 for(auto &tweet : tweets[userId]){
                     pq.push(tweet);
                 }
@@ -55,7 +56,7 @@ class Twitter {
         }
         
         void follow(int followerId, int followeeId) {
-            // if the follower and followee are not the same, to make sure a follow can't follow themselves.
+            // check if the follower and followee are not the same, to make sure a follow can't follow themselves.
             if(followerId != followeeId){
                 // inserting the followee into the following list of the followerId
                 following[followerId].insert(followeeId);

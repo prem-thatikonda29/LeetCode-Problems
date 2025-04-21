@@ -13,7 +13,6 @@ public:
         int count = 0;
         count += solve(arr, target, idx + 1, sum + arr[idx]);
         count += solve(arr, target, idx + 1, sum - arr[idx]);
-
         return count;
     }
 

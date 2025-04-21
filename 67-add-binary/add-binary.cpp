@@ -1,28 +1,19 @@
 class Solution {
 public:
     string addBinary(string a, string b) {
-        string result = "";
-        int carry = 0;
-
+        string ans = "";
         int i = a.length() - 1;
         int j = b.length() - 1;
-        
-        while (i >= 0 || j >= 0 || carry) {
-            int bit_sum = carry;
-            
-            if (i >= 0) {
-                bit_sum += a[i] - '0';
-                i--;
-            }
-            if (j >= 0) {
-                bit_sum += b[j] - '0';
-                j--;
-            }
+        int sum = 0;
 
-            result = to_string(bit_sum % 2) + result;
-            carry = bit_sum / 2;
+        while(i >= 0 || j >= 0 || sum){
+            if(i >= 0) sum += a[i--] - '0';
+            if(j >= 0) sum += b[j--] - '0';
+
+            ans = char(sum % 2 + '0') + ans;
+            sum /= 2; 
         }
-        
-        return result;
+
+        return ans;
     }
 };

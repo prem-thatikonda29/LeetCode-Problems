@@ -1,34 +1,48 @@
 class Solution {
 public:
-    bool isPalindrome(string &str, int left, int right) {
-        while (left < right) {
-            if (str[left] != str[right]) {
+    bool checkPal(string curr){
+        if(curr.empty()) return false;
+
+        if(curr.length() == 1) return true;
+
+        int i = 0; 
+        int j = curr.length() - 1;
+        while(i <= j){
+            if(curr[i] == curr[j]){
+                i++;
+                j--;
+            }
+            else{
                 return false;
             }
-            left++;
-            right--;
         }
+
         return true;
     }
 
-    void backtrack(vector<vector<string>> &result, vector<string> &current, string &s, int start) {
-        if (start == s.length()) {
-            result.push_back(current);
+    void solve(string str, vector<vector<string>>& ans, vector<string>& inn){
+        if(str.empty()){
+            ans.push_back(inn);
             return;
         }
-        for (int end = start; end < s.length(); end++) {
-            if (isPalindrome(s, start, end)) {
-                current.push_back(s.substr(start, end - start + 1));
-                backtrack(result, current, s, end + 1);
-                current.pop_back(); // backtrack
+
+        for(int i = 1; i <= str.length(); i++){
+            string partition = str.substr(0, i);
+            if(checkPal(partition)){
+                inn.push_back(partition);
+                solve(str.substr(i), ans, inn);
+                inn.pop_back();
             }
         }
     }
 
     vector<vector<string>> partition(string s) {
-        vector<vector<string>> result;
-        vector<string> current;
-        backtrack(result, current, s, 0);
-        return result;
+        vector<vector<string>> ans;
+        vector<string> inner;
+
+        if(s.empty()) return {{}};
+
+        solve(s, ans, inner);
+        return ans;
     }
 };
